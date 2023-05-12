@@ -1,61 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Karl - Portfolio</title>
-    <link rel="stylesheet" href="./output.css" />
-    <script
-      src="https://kit.fontawesome.com/b2cb6cdadd.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css"
-    />
-  </head>
-  <body>
-    <div class="backtotop">
-      <a href="#banner"
-        ><span><i class="fa-solid fa-chevron-up"></i></span
-      ></a>
-    </div>
-    <header class="header fixed bg-[#0EA2A6] w-[100%] z-10">
-      <div class="relative px-0">
-        <div class="container">
-          <div
-            class="header__wrapper flex items-center py-[1rem] justify-between"
-          >
-            <img
-              src="./img/Logo.png"
-              alt=""
-              class="w-[3.3rem] h-[3.3rem] lg:w-[4rem] lg:h-[4rem]"
-            />
-            <div class="toggle__menu lg:hidden">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div
-              class="navigation absolute top-[5.3rem] bg-[rgb(0,0,0,.2)] w-[100%] h-[91vh] flex justify-end lg:static lg:bg-transparent lg:w-auto lg:h-auto"
-            >
-              <ul
-                class="w-[70%] bg-white pt-[3rem] h-[91vh] lg:flex lg:h-auto lg:pt-0 lg:bg-transparent lg:w-auto"
-              >
-                <li><a href="#banner" class="closed active">Home</a></li>
-                <li><a href="#skill" class="closed">Skills</a></li>
-                <li><a href="#service" class="closed">Services</a></li>
-                <li><a href="#project" class="closed">Project</a></li>
-                <li><a href="#contact" class="closed">Contact</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <section
+
+<?php get_header(); ?>
+<?php
+$homepage_id = get_option('page_on_front');
+?>
+
+<section
       id="banner"
       class="banner bg-[#0ea2a6] h-[100vh] pt-[6rem] text-center overflow-hidden relative lg:flex lg:items-center"
     >
@@ -70,7 +19,7 @@
             class="circle1 h-[40rem] w-[40rem] rounded-[50%] border-[rgb(250,250,250,.7)] border-[5px] absolute top-[-24rem] left-[-10rem] hidden lg:block"
           ></div>
           <img
-            src="./img/Banner.png"
+            src="<?php echo get_template_directory_uri()?> ./img/Banner.png"
             alt=""
             class="w-[17.5rem] mx-auto z-0 lg:w-[35rem] lg:mx-0 relative"
           />
@@ -78,33 +27,33 @@
             <ul
               class="flex justify-center lg:justify-start text-center lg:mb-[1.5rem]"
             >
+            <?php if( have_rows('social',$homepage_id ) ): ?>
+
+            <?php while( have_rows('social',$homepage_id )) : the_row();  ?>
+
+             <?php $sub_value = get_sub_field('icon')?>
+             <?php $link = get_sub_field('icon_link')?>
               <li>
-                <a href=""><i class="fa-brands fa-github"></i></a>
+              <a href="<?php echo $link ?>"><i class="<?php echo $sub_value ?>"></i></a>
               </li>
-              <li>
-                <a href=""><i class="fa-brands fa-linkedin"></i></a>
-              </li>
-              <li>
-                <a href=""><i class="fa-brands fa-google-plus-g"></i></a>
-              </li>
+              <?php endwhile; ?>
+                <?php endif; ?>
+            
             </ul>
             <h1
               class="uppercase text-white text-[2.3rem] font-[650] border-b-[3px] max-w-[25rem] mx-auto lg:text-[4rem] lg:max-w-none"
             >
-              <span class="text-black">I am</span> Karl Cydrick
+              <span class="text-black"><?php echo get_field('banner_title_span'); ?></span> <?php echo get_field('banner_title'); ?>
             </h1>
             <h2
               class="uppercase text-white font-[700] leading-[2.5rem] lg:text-[2rem] lg:leading-[4rem]"
             >
-              UI/UX designer <span class="text-black">and</span> Web developer
+            <?php echo get_field('banner_subtitle'); ?> <span class="text-black"><?php echo get_field('banner_subtitle_span'); ?></span> <?php echo get_field('banner_subtitle_2'); ?>
             </h2>
             <p
               class="text-white text-justify text-[1.1rem] leading-[2.3rem] max-w-[25rem] mx-auto mt-[2rem] lg:mx-0 lg:text-[1.3rem] lg:max-w-[33rem]"
             >
-              At 22 years old, I am a passionate web developer eager to create
-              dynamic and engaging website that captive user and deliver
-              impactful result. My goal is to become a skilled professional in
-              the field.
+            <?php echo get_field('banner_paragraph'); ?>
             </p>
             <div class="banner__button">
               <a
@@ -133,27 +82,42 @@
           <h2
             class="text-[#0EA2A6] border-b-[3px] border-[#0EA2A6] text-[2rem] font-[700] max-w-[9rem] text-center mx-auto"
           >
-            <span class="text-black">My</span> Skills
+            <span class="text-black"><?php echo get_field('skill_title_span'); ?></span> <?php echo get_field('skill_title'); ?>
           </h2>
           <div
             class="skill__card grid grid-cols-2 gap-[2rem] mt-[4rem] lg:grid-cols-4 lg:gap-y-[4rem]"
           >
+          <?php
+
+          $args = array(
+              'post_type' => 'Skillspost',
+              'posts_per_page' => 8,
+          );
+          $newQuery = new WP_Query($args)
+          ?>
+          <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post();?>
+
             <div class="card relative">
-              <img
-                src="./img/BW-html.png"
-                alt=""
-                class="skill_img w-[2rem] absolute scale-[4.7] top-[40%] ease-in duration-[300ms]"
-              />
+            <?php echo get_the_post_thumbnail(); ?>
               <div class="card__content">
-                <img src="./img/c-html.png" alt="" />
-                <h3>HTML</h3>
+              <?php echo get_field('hover_img'); ?>
+                <h3><?php the_title(); ?></h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur. Purus viverra tempor
-                  tempor leo. Nullam faucibus turpis gravida id
+                <?php the_content(); ?>
                 </p>
               </div>
             </div>
-            <div class="card relative">
+
+            <?php 
+                
+              endwhile;
+                  else:
+                      echo "no available post";
+                  endif;
+                  wp_reset_postdata();
+                  
+                  ?>
+            <!-- <div class="card relative">
               <img
                 src="./img/BW-css.png"
                 alt=""
@@ -257,7 +221,7 @@
                   tempor leo. Nullam faucibus turpis gravida id
                 </p>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -571,76 +535,4 @@
       </div>
     </section>
 
-    <footer class="footer py-[1.5rem] bg-[#0EA2A6]">
-      <div class="container">
-        <div
-          class="footer__wrapper flex flex-col justify-center items-center lg:flex-row lg:justify-between"
-        >
-          <ul class="flex">
-            <li>
-              <a href=""><i class="fa-brands fa-facebook-f"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="fa-brands fa-twitter"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="fa-brands fa-instagram"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="fa-brands fa-linkedin"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="fa-brands fa-google-plus-g"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="fa-brands fa-github"></i></a>
-            </li>
-          </ul>
-          <p class="text-[1.3rem] text-white pt-2 lg:text-[1.5rem] lg:pt-0">
-            ©Karl Cydrick C. Raynes - 2023
-          </p>
-        </div>
-      </div>
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
-    <script>
-      var slider = tns({
-        container: ".slider_1",
-        items: 1,
-        slideBy: "page",
-        autoplay: true,
-        axis: "horizontal",
-        controls: false,
-        nav: true,
-        autoplayPosition: false,
-        autoplayButton: false,
-        responsive: {
-          900: {
-            items: 3,
-            slideBy: 1,
-            center: true,
-          },
-        },
-      });
-
-      var slider = tns({
-        container: ".slider_2",
-        items: 1,
-        slideBy: "page",
-        autoplay: true,
-        axis: "horizontal",
-        controls: false,
-        nav: true,
-        autoplayPosition: false,
-        autoplayButton: false,
-        responsive: {
-          900: {
-            items: 3,
-            slideBy: true,
-          },
-        },
-      });
-    </script>
-    <script src="./script.js"></script>
-  </body>
-</html>
+<?php get_footer(); ?>
