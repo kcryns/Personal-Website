@@ -4,27 +4,20 @@
           class="footer__wrapper flex flex-col justify-center items-center lg:flex-row lg:justify-between"
         >
           <ul class="flex">
+          <?php if( have_rows('footer_social') ): ?>
+            <?php while( have_rows('footer_social')) : the_row();  ?>
+
+                <?php $sub_value = get_sub_field('icon')?>
+                <?php $link = get_sub_field('link')?>
             <li>
-              <a href=""><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="<?php echo $link ?>"><i class="<?php echo $sub_value ?>"></i></a>
             </li>
-            <li>
-              <a href=""><i class="fa-brands fa-twitter"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="fa-brands fa-instagram"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="fa-brands fa-linkedin"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="fa-brands fa-google-plus-g"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="fa-brands fa-github"></i></a>
-            </li>
+            <?php endwhile; ?>
+            <?php endif; ?>
+            
           </ul>
           <p class="text-[1.3rem] text-white pt-2 lg:text-[1.5rem] lg:pt-0">
-            ©Karl Cydrick C. Raynes - 2023
+            <?php echo get_field('copyright');?>
           </p>
         </div>
       </div>

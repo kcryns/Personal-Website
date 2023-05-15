@@ -48,7 +48,7 @@ $homepage_id = get_option('page_on_front');
             <h2
               class="uppercase text-white font-[700] leading-[2.5rem] lg:text-[2rem] lg:leading-[4rem]"
             >
-            <?php echo get_field('banner_subtitle'); ?> <span class="text-black"><?php echo get_field('banner_subtitle_span'); ?></span> <?php echo get_field('banner_subtitle_2'); ?>
+            <?php echo get_field('banner_subtitle_1'); ?> <span class="text-black"><?php echo get_field('banner_subtitle_span'); ?></span> <?php echo get_field('banner_subtitle_2'); ?>
             </h2>
             <p
               class="text-white text-justify text-[1.1rem] leading-[2.3rem] max-w-[25rem] mx-auto mt-[2rem] lg:mx-0 lg:text-[1.3rem] lg:max-w-[33rem]"
@@ -100,7 +100,15 @@ $homepage_id = get_option('page_on_front');
             <div class="card relative">
             <?php echo get_the_post_thumbnail(); ?>
               <div class="card__content">
-              <?php echo get_field('hover_img'); ?>
+              <?php
+                    $image = get_field('hover_img');
+                    if(!empty($image)):
+                    ?>
+
+                    <img src="<?php echo esc_url($image['url']) ?>" alt="">
+          
+                    <?php endif; ?>
+              
                 <h3><?php the_title(); ?></h3>
                 <p>
                 <?php the_content(); ?>
@@ -114,114 +122,8 @@ $homepage_id = get_option('page_on_front');
                   else:
                       echo "no available post";
                   endif;
-                  wp_reset_postdata();
-                  
+                  wp_reset_postdata();       
                   ?>
-            <!-- <div class="card relative">
-              <img
-                src="./img/BW-css.png"
-                alt=""
-                class="skill_img w-[2rem] absolute scale-[4.7] top-[40%] ease-in duration-[300ms]"
-              />
-              <div class="card__content">
-                <img src="./img/c-css.png" alt="" />
-                <h3>CSS</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Purus viverra tempor
-                  tempor leo. Nullam faucibus turpis gravida id
-                </p>
-              </div>
-            </div>
-            <div class="card relative">
-              <img
-                src="./img/BW-javascript.png"
-                alt=""
-                class="skill_img w-[2.5rem] absolute scale-[4.7] top-[40%] ease-in duration-[300ms]"
-              />
-              <div class="card__content">
-                <img src="./img/c-js.png" alt="" />
-                <h3>Javascript</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Purus viverra tempor
-                  tempor leo. Nullam faucibus turpis gravida id
-                </p>
-              </div>
-            </div>
-            <div class="card relative">
-              <img
-                src="./img/BW-sass.png"
-                alt=""
-                class="skill_img w-[2rem] absolute scale-[4.7] top-[40%] ease-in duration-[300ms]"
-              />
-              <div class="card__content">
-                <img src="./img/c-sass.png" alt="" />
-                <h3>SASS</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Purus viverra tempor
-                  tempor leo. Nullam faucibus turpis gravida id
-                </p>
-              </div>
-            </div>
-            <div class="card relative">
-              <img
-                src="./img/BW-wordpress.png"
-                alt=""
-                class="skill_img w-[2rem] absolute scale-[4.7] top-[40%] ease-in duration-[300ms]"
-              />
-              <div class="card__content">
-                <img src="./img/c-wordpress.png" alt="" />
-                <h3>Wordpress</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Purus viverra tempor
-                  tempor leo. Nullam faucibus turpis gravida id
-                </p>
-              </div>
-            </div>
-            <div class="card relative">
-              <img
-                src="./img/BW-tailwind.png"
-                alt=""
-                class="skill_img w-[2rem] absolute scale-[4.7] top-[40%] ease-in duration-[300ms]"
-              />
-              <div class="card__content">
-                <img src="./img/c-tailwind.png" alt="" />
-                <h3>Tailwind</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Purus viverra tempor
-                  tempor leo. Nullam faucibus turpis gravida id
-                </p>
-              </div>
-            </div>
-            <div class="card relative">
-              <img
-                src="./img/BW-figma.png"
-                alt=""
-                class="skill_img w-[2rem] absolute top-[40%] ease-in duration-[300ms] scale-[3.5]"
-              />
-              <div class="card__content">
-                <img src="./img/c-figma.png" alt="" />
-                <h3>Figma</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Purus viverra tempor
-                  tempor leo. Nullam faucibus turpis gravida id
-                </p>
-              </div>
-            </div>
-            <div class="card relative">
-              <img
-                src="./img/BW-github.png"
-                alt=""
-                class="skill_img w-[2rem] absolute scale-[4.7] top-[40%] ease-in duration-[300ms]"
-              />
-              <div class="card__content">
-                <img src="./img/c-github.png" alt="" />
-                <h3>Github</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Purus viverra tempor
-                  tempor leo. Nullam faucibus turpis gravida id
-                </p>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -232,51 +134,41 @@ $homepage_id = get_option('page_on_front');
           <h3
             class="text-white border-b-[3px] border-white text-[2rem] font-[700] max-w-[12rem] text-center mx-auto"
           >
-            <span class="text-black">My</span> Services
+          <?php echo get_field('service_title'); ?>
           </h3>
           <div class="services__card mt-[4rem] lg:grid lg:grid-cols-3">
+
+          <?php
+
+          $args = array(
+              'post_type' => 'Servicepost',
+              'posts_per_page' => 3,
+          );
+          $newQuery = new WP_Query($args)
+          ?>
+          <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post();?>
+
             <div
               class="services__card__content flex justify-center items-center"
             >
               <div class="services__content__text">
-                <i class="fa-solid fa-pen-ruler"></i>
-                <h4>UI/UX Design</h4>
+                <i class="<?php echo get_field('service_card_icon');?>"></i>
+                <h4><?php the_title(); ?></h4>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur. Ut pulvinar id
-                  vestibulum id placerat. Bibendum at eu vitae risus pharetra
-                  cursus
+                <?php the_content(); ?>
                 </p>
                 <a href="">Read More...</a>
               </div>
             </div>
-            <div
-              class="services__card__content flex justify-center items-center"
-            >
-              <div class="services__content__text">
-                <i class="fa-solid fa-pen-ruler"></i>
-                <h4>UI/UX Design</h4>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Ut pulvinar id
-                  vestibulum id placerat. Bibendum at eu vitae risus pharetra
-                  cursus
-                </p>
-                <a href="">Read More...</a>
-              </div>
-            </div>
-            <div
-              class="services__card__content flex justify-center items-center"
-            >
-              <div class="services__content__text">
-                <i class="fa-solid fa-pen-ruler"></i>
-                <h4>UI/UX Design</h4>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Ut pulvinar id
-                  vestibulum id placerat. Bibendum at eu vitae risus pharetra
-                  cursus
-                </p>
-                <a href="">Read More...</a>
-              </div>
-            </div>
+            <?php 
+                
+              endwhile;
+                  else:
+                      echo "no available post";
+                  endif;
+                  wp_reset_postdata();
+                  
+                  ?>
           </div>
         </div>
       </div>
@@ -289,7 +181,7 @@ $homepage_id = get_option('page_on_front');
           <h2
             class="section__title text-[#0EA2A6] border-b-[3px] border-[#0EA2A6] text-[2rem] font-[700] max-w-10rem] text-center mx-auto"
           >
-            <span class="text-black">My</span> Projects
+          <?php echo get_field('project_title'); ?>
           </h2>
           <div class="projects__tab h-[33rem]">
             <div class="projects__nav py-[2rem] relative">
@@ -311,94 +203,89 @@ $homepage_id = get_option('page_on_front');
             <div class="projects__content">
               <div id="project-1-content" class="project-tab__content active">
                 <div class="slider_1">
+
+                <?php
+                $args = array(
+                    'post_type' => 'Sasspost',
+                    'posts_per_page' => 4,
+                );
+                $newQuery = new WP_Query($args)
+                ?>
+                <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post();?>
+
                   <div class="projects__card">
                     <div class="projects__card__content p-[1.2rem]">
-                      <img src="./img/foodfactory-card.png" alt="" />
-                      <h3>Food Factory</h3>
+                      <?php echo get_the_post_thumbnail();?>
+                      <h3><?php the_title(); ?></h3>
                       <div class="flex justify-between items-center mt-[3rem]">
                         <div class="logo_text flex items-center">
-                          <img src="./img/sass-card-logo.png" alt="" />
+                        <?php
+                          $image = get_field('project_logo');
+                          if(!empty($image)):
+                          ?>
+                          <img src="<?php echo esc_url($image['url']) ?>" alt="">
+                          <?php endif; ?>
                           <h4>SASS</h4>
                         </div>
                         <a href="" class="border-[2px] rounded-[50%]"
                           ><i
-                            class="fa-solid fa-up-right-from-square p-[.8rem] text-white"
+                            class="<?php echo get_field('link');?> p-[.8rem] text-white"
                           ></i
                         ></a>
                       </div>
                     </div>
                   </div>
-                  <div class="projects__card">
-                    <div class="projects__card__content p-[1.2rem]">
-                      <img src="./img/wondertour-card.png" alt="" />
-                      <h3>Wonder Tour</h3>
-                      <div class="flex justify-between items-center mt-[3rem]">
-                        <div class="logo_text flex items-center">
-                          <img src="./img/sass-card-logo.png" alt="" />
-                          <h4>SASS</h4>
-                        </div>
-                        <a href="" class="border-[2px] rounded-[50%]"
-                          ><i
-                            class="fa-solid fa-up-right-from-square p-[.8rem] text-white"
-                          ></i
-                        ></a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="projects__card">
-                    <div class="projects__card__content p-[1.2rem]">
-                      <img src="./img/vsc-card.png" alt="" />
-                      <h3>Visual Studio Code</h3>
-                      <div class="flex justify-between items-center mt-[3rem]">
-                        <div class="logo_text flex items-center">
-                          <img src="./img/sass-card-logo.png" alt="" />
-                          <h4>SASS</h4>
-                        </div>
-                        <a href="" class="border-[2px] rounded-[50%]"
-                          ><i
-                            class="fa-solid fa-up-right-from-square p-[.8rem] text-white"
-                          ></i
-                        ></a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="projects__card">
-                    <div class="projects__card__content p-[1.2rem]">
-                      <img src="./img/spotify-card.png" alt="" />
-                      <h3>Spotify</h3>
-                      <div class="flex justify-between items-center mt-[3rem]">
-                        <div class="logo_text flex items-center">
-                          <img src="./img/sass-card-logo.png" alt="" />
-                          <h4>SASS</h4>
-                        </div>
-                        <a href="" class="border-[2px] rounded-[50%]"
-                          ><i
-                            class="fa-solid fa-up-right-from-square p-[.8rem] text-white"
-                          ></i
-                        ></a>
-                      </div>
-                    </div>
-                  </div>
+
+                  <?php           
+                endwhile;
+                  else:
+                      echo "no available post";
+                  endif;
+                  wp_reset_postdata();
+                  ?>
+
                 </div>
               </div>
               <div id="project-2-content" class="project-tab__content">
-                <div class="projects__card">
-                  <div class="projects__card__content p-[1.2rem]">
-                    <img src="./img/spotifypremium-card.png" alt="" />
-                    <h3>Spotify Premium</h3>
-                    <div class="flex justify-between items-center mt-[3rem]">
-                      <div class="logo_text flex items-center">
-                        <img src="./img/tailwind-card-logo.png" alt="" />
-                        <h4>Tailwind</h4>
+              <?php
+                $args = array(
+                    'post_type' => 'tailwindpost',
+                    'posts_per_page' => 1,
+                );
+                $newQuery = new WP_Query($args)
+                ?>
+                <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post();?>
+
+                  <div class="projects__card">
+                    <div class="projects__card__content p-[1.2rem]">
+                      <?php echo get_the_post_thumbnail();?>
+                      <h3><?php the_title(); ?></h3>
+                      <div class="flex justify-between items-center mt-[3rem]">
+                        <div class="logo_text flex items-center">
+                        <?php
+                          $image = get_field('project_logo');
+                          if(!empty($image)):
+                          ?>
+                          <img src="<?php echo esc_url($image['url']) ?>" alt="">
+                          <?php endif; ?>
+                          <h4>SASS</h4>
+                        </div>
+                        <a href="" class="border-[2px] rounded-[50%]"
+                          ><i
+                            class="<?php echo get_field('link');?> p-[.8rem] text-white"
+                          ></i
+                        ></a>
                       </div>
-                      <a href="" class="border-[2px] rounded-[50%]"
-                        ><i
-                          class="fa-solid fa-up-right-from-square p-[.8rem] text-white"
-                        ></i
-                      ></a>
                     </div>
                   </div>
-                </div>
+
+                  <?php           
+                endwhile;
+                  else:
+                      echo "no available post";
+                  endif;
+                  wp_reset_postdata();
+                  ?>
               </div>
               <div
                 id="project-3-content"
@@ -442,23 +329,45 @@ $homepage_id = get_option('page_on_front');
                 </div>
               </div>
               <div id="project-4-content" class="project-tab__content">
-                <div class="projects__card">
-                  <div class="projects__card__content p-[1.2rem]">
-                    <img src="./img/presentmeet-card.png" alt="" />
-                    <h3>Present-Meet</h3>
-                    <div class="flex justify-between items-center mt-[3rem]">
-                      <div class="logo_text flex items-center">
-                        <img src="./img/javascript-card-logo.png" alt="" />
-                        <h4>Javascript</h4>
+              <?php
+                $args = array(
+                    'post_type' => 'Javascriptpost',
+                    'posts_per_page' => 1,
+                );
+                $newQuery = new WP_Query($args)
+                ?>
+                <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post();?>
+
+                  <div class="projects__card">
+                    <div class="projects__card__content p-[1.2rem]">
+                      <?php echo get_the_post_thumbnail();?>
+                      <h3><?php the_title(); ?></h3>
+                      <div class="flex justify-between items-center mt-[3rem]">
+                        <div class="logo_text flex items-center">
+                        <?php
+                          $image = get_field('project_logo');
+                          if(!empty($image)):
+                          ?>
+                          <img src="<?php echo esc_url($image['url']) ?>" alt="">
+                          <?php endif; ?>
+                          <h4>SASS</h4>
+                        </div>
+                        <a href="" class="border-[2px] rounded-[50%]"
+                          ><i
+                            class="<?php echo get_field('link');?> p-[.8rem] text-white"
+                          ></i
+                        ></a>
                       </div>
-                      <a href="" class="border-[2px] rounded-[50%]"
-                        ><i
-                          class="fa-solid fa-up-right-from-square p-[.8rem] text-white"
-                        ></i
-                      ></a>
                     </div>
                   </div>
-                </div>
+
+                  <?php           
+                endwhile;
+                  else:
+                      echo "no available post";
+                  endif;
+                  wp_reset_postdata();
+                  ?>
               </div>
             </div>
           </div>
@@ -472,31 +381,29 @@ $homepage_id = get_option('page_on_front');
           <h3
             class="section__title text-white border-b-[3px] border-white text-[2rem] font-[700] max-w-[12rem] text-center mx-auto lg:text-start lg:mx-0"
           >
-            Contact
-            <span class="text-black">Me</span>
+          <?php echo get_field('contact_title');?>
           </h3>
           <p
             class="text-white text-[1.2rem] font-[600] max-w-[30rem] text-center mx-auto lg:text-start lg:mx-0 lg:max-w-none"
           >
-            Feel free to contact me if you have a question in your mind.
+           <?php echo get_field('contact_subtitle');?>
           </p>
           <div class="contact__content lg:grid lg:grid-cols-5">
             <div
               class="contact__left flex flex-col justify-center items-center lg:justify-start lg:items-start lg:col-span-2"
             >
               <ul class="">
+              <?php if( have_rows('contact_info') ): ?>
+            <?php while( have_rows('contact_info')) : the_row();  ?>
+
+                <?php $sub_value = get_sub_field('contact_info_icon')?>
+                <?php $text = get_sub_field('contact_info_text')?>
                 <li>
-                  <a href=""><i class="fa-solid fa-envelope"></i></a>
-                  <p>rayneskarlcydrick@gmail.com</p>
+                  <a href=""><i class="<?php echo $sub_value ?>"></i></a>
+                  <p><?php echo $text ?></p>
                 </li>
-                <li>
-                  <a href=""><i class="fa-solid fa-location-dot"></i></a>
-                  <p>San Joaquin, Sto. Tomas, Batangas</p>
-                </li>
-                <li>
-                  <a href=""><i class="fa-solid fa-phone"></i></a>
-                  <p>+639156045676</p>
-                </li>
+                <?php endwhile; ?>
+                <?php endif; ?>
               </ul>
               <a
                 href=""
@@ -506,23 +413,7 @@ $homepage_id = get_option('page_on_front');
             </div>
             <div class="contact__right lg:col-span-3">
               <form action="">
-                <div
-                  class="contact__right__upper lg:grid lg:grid-cols-2 lg:gap-[2rem]"
-                >
-                  <input type="text" placeholder="Your Name" />
-                  <br class="hidden" />
-                  <input type="text" placeholder="Phone Number" />
-                </div>
-                <input type="email" placeholder="Email Address" />
-                <br />
-                <textarea
-                  name=""
-                  placeholder="Message"
-                  id=""
-                  cols="30"
-                  rows="10"
-                ></textarea>
-                <br />
+              <?php echo do_shortcode('[contact-form-7 id="120" title="Contact form 1"]')?>
               </form>
               <a
                 href=""
