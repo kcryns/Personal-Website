@@ -57,12 +57,12 @@ $homepage_id = get_option('page_on_front');
             </p>
             <div class="banner__button">
               <a
-                href=""
+                href="#skill"
                 class="btn font-[600] text-[1.4rem] mt-[3rem] px-[.9rem] py-[.4rem] bg-transparent border-white text-white border-[2px] hidden lg:inline-block hover:text-[#0EA2A6] hover:bg-white ease-in duration-100"
                 >Explore More</a
               >
               <a
-                href=""
+                href="#contact"
                 class="btn font-[600] text-[1.4rem] mt-[3rem] px-[2.5rem] lg:ml-[2rem] border-[2px] border-white hover:bg-transparent hover:text-white ease-in duration-100"
                 >Hire Me</a
               >
@@ -157,7 +157,7 @@ $homepage_id = get_option('page_on_front');
                 <p>
                 <?php the_content(); ?>
                 </p>
-                <a href="">Read More...</a>
+                <a href="<?php echo get_the_permalink();?>">Read More...</a>
               </div>
             </div>
             <?php 
@@ -227,7 +227,7 @@ $homepage_id = get_option('page_on_front');
                           <?php endif; ?>
                           <h4>SASS</h4>
                         </div>
-                        <a href="" class="border-[2px] rounded-[50%]"
+                        <a href="" class="border-[2px] rounded-[50%]  "
                           ><i
                             class="<?php echo get_field('link');?> p-[.8rem] text-white"
                           ></i
@@ -270,7 +270,7 @@ $homepage_id = get_option('page_on_front');
                           <?php endif; ?>
                           <h4>SASS</h4>
                         </div>
-                        <a href="" class="border-[2px] rounded-[50%]"
+                        <a href="" class="border-[2px] rounded-[50%] "
                           ><i
                             class="<?php echo get_field('link');?> p-[.8rem] text-white"
                           ></i
@@ -292,24 +292,44 @@ $homepage_id = get_option('page_on_front');
                 class="project-tab__content max-w-[21.8rem]"
               >
                 <div class="slider_2">
+                <?php
+                $args = array(
+                    'post_type' => 'Wordpresspost',
+                    'posts_per_page' => 2,
+                );
+                $newQuery = new WP_Query($args)
+                ?>
+                <?php if($newQuery->have_posts()) : while($newQuery->have_posts()) : $newQuery->the_post();?>
                   <div class="projects__card">
                     <div class="projects__card__content p-[1.2rem]">
-                      <img src="./img/theblog-card.png" alt="" />
-                      <h3>The Blog</h3>
+                    <?php echo get_the_post_thumbnail();?>
+                      <h3><?php the_title(); ?></h3>
                       <div class="flex justify-between items-center mt-[3rem]">
                         <div class="logo_text flex items-center">
-                          <img src="./img/wordpress-card-logo.png" alt="" />
+                        <?php
+                          $image = get_field('project_logo');
+                          if(!empty($image)):
+                          ?>
+                          <img src="<?php echo esc_url($image['url']) ?>" alt="">
+                          <?php endif; ?>
                           <h4>Wordpress</h4>
                         </div>
-                        <a href="" class="border-[2px] rounded-[50%]"
+                        <a href="" class="border-[2px] rounded-[50%] "
                           ><i
-                            class="fa-solid fa-up-right-from-square p-[.8rem] text-white"
+                            class="<?php echo get_field('link');?> p-[.8rem] text-white"
                           ></i
                         ></a>
                       </div>
                     </div>
                   </div>
-                  <div class="projects__card">
+                  <?php           
+                endwhile;
+                  else:
+                      echo "no available post";
+                  endif;
+                  wp_reset_postdata();
+                  ?>
+                  <!-- <div class="projects__card">
                     <div class="projects__card__content p-[1.2rem]">
                       <img src="./img/cvd-card.png" alt="" />
                       <h3 class="leading-[2rem]">Creative Visual Design</h3>
@@ -318,14 +338,14 @@ $homepage_id = get_option('page_on_front');
                           <img src="./img/wordpress-card-logo.png" alt="" />
                           <h4>Wordpress</h4>
                         </div>
-                        <a href="" class="border-[2px] rounded-[50%]"
+                        <a href="" class="border-[2px] rounded-[50%] "
                           ><i
                             class="fa-solid fa-up-right-from-square p-[.8rem] text-white"
                           ></i
                         ></a>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div id="project-4-content" class="project-tab__content">
@@ -352,7 +372,7 @@ $homepage_id = get_option('page_on_front');
                           <?php endif; ?>
                           <h4>SASS</h4>
                         </div>
-                        <a href="" class="border-[2px] rounded-[50%]"
+                        <a href="" class="border-[2px] rounded-[50%] "
                           ><i
                             class="<?php echo get_field('link');?> p-[.8rem] text-white"
                           ></i
@@ -413,13 +433,13 @@ $homepage_id = get_option('page_on_front');
             </div>
             <div class="contact__right lg:col-span-3">
               <form action="">
-              <?php echo do_shortcode('[contact-form-7 id="120" title="Contact form 1"]')?>
+              <?php echo do_shortcode('[contact-form-7 id="120" title="Contact form 1"]')?>             
               </form>
-              <a
+              <!-- <a
                 href=""
                 class="btn px-[1rem] text-[1.4rem] font-[600] text-white bg-transparent border-[3px] border-white mt-[2rem] hover:text-[#0EA2A6] hover:bg-white ease-in duration-100"
                 >Send Message</a
-              >
+              > -->
             </div>
           </div>
         </div>

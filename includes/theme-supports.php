@@ -4,6 +4,7 @@ function portfolio_support(){
 
 register_nav_menus(array(
     'header_menu' => __('Header Menu' , 'text_domain'),
+    'singlepage_menu' => __('Single Page Menu' , 'text_domain'),
     'footer_menu' => __('Footer Menu' , 'text_domain')
 ));
 

@@ -917,8 +917,7 @@ video {
 }
 
 .services .services__card__content p {
-  margin-bottom: 3rem;
-  margin-top: 1rem;
+  padding-bottom: 1.5rem;
   padding-left: 1.2rem;
   padding-right: 1.2rem;
   font-size: 1.1rem;
@@ -1847,4 +1846,34 @@ body {
   .lg\:leading-\[4rem\] {
     line-height: 4rem;
   }
+}
+
+.single__page {
+  height: 100vh;
+  background-color: white;
+}
+
+.single__page .single__page__wrapper {
+  height: 40rem;
+  width: 70rem;
+  box-shadow: 5px 0 10px 5px rgb(0, 0, 0, 0.5);
+}
+
+.contact__right input[type="submit"] {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: white;
+  border: solid 3px white;
+  margin-top: 2rem;
+  border-radius: 2rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 300ms;
+}
+
+.contact__right input[type="submit"]:hover {
+  background-color: white;
+  color: #0ea2a6;
+  transition: 300ms;
 }
