@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Read-More</title>
+    <title><?php the_title(); ?></title>
     <link rel="stylesheet" href="./css/main.css">
     <script
       src="https://kit.fontawesome.com/b2cb6cdadd.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
 </head>
 <body>
 <style>
@@ -67,11 +68,16 @@
     .single__page .home{
         position: absolute;
         left: 3rem;
+        
     }
 
     .single__page .home a i{
         color: #0EA2A6;
-        font-size: 2rem;
+        font-size: 2rem;    
+    }
+
+    .single__page .home a:hover i{
+       color: black;
     }
 
 </style>
@@ -93,4 +99,10 @@
     </div>
 </section>
 </body>
+
+<script>
+ScrollReveal().reveal(".single__page__text",{ delay: 300, origin: "left" });
+
+ScrollReveal().reveal(".img", {delay: 300,origin: "right"});
+</script>
 </html>

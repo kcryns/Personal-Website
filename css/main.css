@@ -799,6 +799,10 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
+.skill .skill__card {
+  place-items: center;
+}
+
 @media (min-width: 1024px) {
   .skill .skill__card .card {
     height: 15rem;
@@ -820,9 +824,15 @@ video {
 .skill .skill__card .card img {
   position: absolute;
   width: 2rem;
-  transform: scale(4.7);
+  transform: scale(4);
   top: 40%;
   transition: ease-in 300ms;
+}
+
+@media (min-width: 1024px) {
+  .skill .skill__card .card img {
+    transform: scale(4.7);
+  }
 }
 
 .skill .skill__card .card:hover img {
@@ -888,6 +898,12 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   text-align: center;
+}
+
+.services .services__card__content:hover {
+  transform: scale(1.2);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: 300ms;
 }
 
 .services .services__card__content:nth-child(2) {
@@ -1000,6 +1016,10 @@ video {
   position: absolute;
   max-width: 21.8rem;
   opacity: 0;
+}
+
+.projects__content .project-tab__content.active {
+  z-index: 99;
 }
 
 @media (min-width: 1024px) {
@@ -1847,8 +1867,7 @@ body {
     line-height: 4rem;
   }
 }
-
-.single__page {
+navi .single__page {
   height: 100vh;
   background-color: white;
 }
@@ -1876,4 +1895,8 @@ body {
   background-color: white;
   color: #0ea2a6;
   transition: 300ms;
+}
+
+.header .navigation ul li.active a {
+  color: black;
 }

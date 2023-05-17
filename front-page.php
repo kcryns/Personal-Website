@@ -227,9 +227,9 @@ $homepage_id = get_option('page_on_front');
                           <?php endif; ?>
                           <h4>SASS</h4>
                         </div>
-                        <a href="" class="border-[2px] rounded-[50%]  "
+                        <a href="<?php echo get_field('link');?>" class="border-[2px] rounded-[50%]  "
                           ><i
-                            class="<?php echo get_field('link');?> p-[.8rem] text-white"
+                            class="<?php echo get_field('link_icon');?> p-[.8rem] text-white"
                           ></i
                         ></a>
                       </div>
@@ -249,7 +249,7 @@ $homepage_id = get_option('page_on_front');
               <div id="project-2-content" class="project-tab__content">
               <?php
                 $args = array(
-                    'post_type' => 'tailwindpost',
+                    'post_type' => 'Tailwindpost',
                     'posts_per_page' => 1,
                 );
                 $newQuery = new WP_Query($args)
@@ -270,9 +270,9 @@ $homepage_id = get_option('page_on_front');
                           <?php endif; ?>
                           <h4>SASS</h4>
                         </div>
-                        <a href="" class="border-[2px] rounded-[50%] "
+                        <a href="<?php echo get_field('link');?>" class="border-[2px] rounded-[50%] "
                           ><i
-                            class="<?php echo get_field('link');?> p-[.8rem] text-white"
+                            class="<?php echo get_field('link_icon');?> p-[.8rem] text-white"
                           ></i
                         ></a>
                       </div>
@@ -314,9 +314,9 @@ $homepage_id = get_option('page_on_front');
                           <?php endif; ?>
                           <h4>Wordpress</h4>
                         </div>
-                        <a href="" class="border-[2px] rounded-[50%] "
+                        <a href="<?php echo get_field('link');?>" class="border-[2px] rounded-[50%] "
                           ><i
-                            class="<?php echo get_field('link');?> p-[.8rem] text-white"
+                            class="<?php echo get_field('link_icon');?> p-[.8rem] text-white"
                           ></i
                         ></a>
                       </div>
@@ -372,9 +372,9 @@ $homepage_id = get_option('page_on_front');
                           <?php endif; ?>
                           <h4>SASS</h4>
                         </div>
-                        <a href="" class="border-[2px] rounded-[50%] "
+                        <a href="<?php echo get_field('link');?>" class="border-[2px] rounded-[50%] "
                           ><i
-                            class="<?php echo get_field('link');?> p-[.8rem] text-white"
+                            class="<?php echo get_field('link_icon');?> p-[.8rem] text-white"
                           ></i
                         ></a>
                       </div>
@@ -435,15 +435,11 @@ $homepage_id = get_option('page_on_front');
               <form action="">
               <?php echo do_shortcode('[contact-form-7 id="120" title="Contact form 1"]')?>             
               </form>
-              <!-- <a
-                href=""
-                class="btn px-[1rem] text-[1.4rem] font-[600] text-white bg-transparent border-[3px] border-white mt-[2rem] hover:text-[#0EA2A6] hover:bg-white ease-in duration-100"
-                >Send Message</a
-              > -->
             </div>
           </div>
         </div>
       </div>
     </section>
+
 
 <?php get_footer(); ?>

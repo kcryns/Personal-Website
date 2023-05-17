@@ -15,7 +15,17 @@ toggleMenu.addEventListener("click", () => {
   toggleMenu.classList.toggle("open");
   headerNav.classList.toggle("open");
 });
-const actclosing = document.querySelectorAll(".closed");
+// const actclosing = document.querySelectorAll(".closed");
+// actclosing.forEach((sara) => {
+//   sara.addEventListener("click", () => {
+//     removeActiveclose();
+//     sara.classList.add("active");
+//     headerNav.classList.remove("open");
+//     toggleMenu.classList.remove("open");
+//     headerNav.style = "transition: .5s ease";
+//   });
+// });
+const actclosing = document.querySelectorAll(".navLink");
 actclosing.forEach((sara) => {
   sara.addEventListener("click", () => {
     removeActiveclose();
